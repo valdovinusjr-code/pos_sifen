@@ -6,5 +6,6 @@ const router = Router()
 router.use(verificarToken)
 
 router.post('/caja/abrir', aperturaCajaRouter.abrirCaja)
+router.post('/caja/cerrar', aperturaCajaRouter.cajasAbiertas)
 
 export default router
