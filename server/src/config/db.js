@@ -22,6 +22,10 @@ const pool = new Pool ({
     database: process.env.DB_DATABASE
 })
 
-
+pool.on('connect', (client) => {
+    client.on('notice', (msg) => {
+        console.log('NOTICE BD:', msg.message)
+    })
+})
 
 export default pool

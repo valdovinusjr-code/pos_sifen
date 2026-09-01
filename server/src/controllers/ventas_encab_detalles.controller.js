@@ -2,11 +2,16 @@ import pool from "../config/db.js";
 
 export const ventasEncabDet = async(req, res)=>{
     const {id_cliente, id_condicion_pago, id_forma_pago, detalle} = req.body
-    if(!id_cliente, !id_condicion_pago, !id_forma_pago, !Array.isArray(detalle), detalle.length === 0){
+    if(!id_cliente || !id_condicion_pago || !id_forma_pago || !Array.isArray(detalle) || detalle.length === 0){
         return res.status(400).json({error: "los campos de detalles no pueden quedar vacios"})
     }
 
     const cliente = await pool.connect()
+
+    cliente.on('notice', (msg) => {
+        console.log('NOTICE BD:', msg.message);
+    });
+    
     try{
         await cliente.query('BEGIN')
         const {rows: apertura_caja} = await cliente.query
@@ -49,7 +54,7 @@ export const ventasEncabDet = async(req, res)=>{
         const {rows: nombre_cliente_rows} = await cliente.query(`SELECT c.nombre_razon_social FROM venta.encab_ventas JOIN venta.cliente c ON encab_ventas.id_cliente = c.id_cliente WHERE id_encab_ventas = $1`, [id_encab])
 
         const total = totalRows[0].total
-        const nombre_cliente = nombre_cliente_rows[0].nombre_cliente
+        const nombre_cliente = nombre_cliente_rows[0].nombre_razon_social
 
         await cliente.query('COMMIT')
         res.status(201).json({
@@ -57,9 +62,11 @@ export const ventasEncabDet = async(req, res)=>{
             cliente: nombre_cliente
         })
     }catch(error){
+        await cliente.query('ROLLBACK')
         if(error.code === 'P0001'){
             return res.status(409).json(error.message)
         }
+        console.error(error)
         res.status(500).json({error: 'Problemas en el acceso a la base de datos'})
     }finally{
         cliente.release()

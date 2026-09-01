@@ -6,4 +6,6 @@ const router = Router()
 
 router.use(verificarToken)
 
-router.post('/ventas', ventasEncabDetRouter.ventasEncabDet)
+router.post('/ventas_nueva', ventasEncabDetRouter.ventasEncabDet)
+
+export default router
