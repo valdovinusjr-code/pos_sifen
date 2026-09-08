@@ -65,6 +65,41 @@ export const asignar = async(req, res)=>{
             {
                 return res.status(400).json({error: 'Todos los campos son obligatorios'})
             }
+        if(!Number.isInteger(Number(id_categoria_items)) || Number(id_categoria_items) <= 0){
+            return res.status(400).json({error: "categoria invalida"})
+        }
+
+        if(!Number.isInteger(Number(id_marcas_items)) || Number(id_marcas_items) <= 0){
+            return res.status(400).json({error: "marca invalida"})
+        }
+
+        if(!Number.isInteger(Number(id_grupo_items)) || Number(id_grupo_items) <= 0){
+            return res.status(400).json({error: "grupo invalido"})
+        }
+
+        if(!Number.isInteger(Number(id_seccion_items)) || Number(id_seccion_items) <= 0){
+            return res.status(400).json({error: "seccion invalida"})
+        }
+
+        if(!Number.isInteger(Number(id_porc_iva)) || Number(id_porc_iva) <= 0){
+            return res.status(400).json({error: "categoria invalida"})
+        }
+
+        if(typeof nombre_item !== 'string' || !nombre_item.trim()){
+            return res.status(400).json({error: "nombre de item invalido"})
+        }
+
+        if(!Number.isFinite(Number(pventa_may)) || Number(pventa_may) <= 0){
+            return res.status(400).json({error: "precio de venta mayorista invalido"})
+        }
+
+        if(!Number.isFinite(Number(pventa_unit)) || Number(pventa_unit) <= 0){
+            return res.status(400).json({error: "precio de venta unitario invalida"})
+        }
+
+        if(!Number.isFinite(Number(pventa_unit_liqui)) || Number(pventa_unit_liqui) <= 0){
+            return res.status(400).json({error: "categoria invalida"})
+        }
         const sql = 
         `
         INSERT INTO inventario.items 
@@ -93,3 +128,4 @@ export const asignar = async(req, res)=>{
         res.status(500).json({error: 'Problemas en el servidor'})
     }
 }
+

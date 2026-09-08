@@ -1,5 +1,50 @@
 import pool from "../config/db.js";
 
+export const listarCaja = async(req, res)=>{
+    try{
+        const sql = 
+        `
+        SELECT 
+        c.id_caja, c.numero_caja
+        FROM caja.cajas c
+        ORDER BY c.numero_caja
+        `
+        const {rows} = await pool.query(sql)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'la caja no existe'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listarDenominaciones = async(req, res)=>{
+    try{
+        const sql = 
+        `
+        SELECT 
+        d.id_denominacion, d.valor, m.nombre, m.simbolo 
+        FROM catalogos.denominacion d JOIN catalogos.monedas m ON
+        d.id_moneda = m.id_monedas
+        ORDER BY d.valor
+        `
+        const {rows} = await pool.query(sql)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'la denominacion no existe'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
 export const abrirCaja = async(req, res) => {
     const {id_caja, detalles} = req.body
     

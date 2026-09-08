@@ -48,6 +48,29 @@ export const asignar = async(req, res)=>{
         ($1, $2, $3, $4, $5, $6)
         RETURNING id_cliente
         `
+        if(id_tipo_doc_identidad !== undefined){
+            const textoVacio = typeof id_tipo_doc_identidad === 'string' && !id_tipo_doc_identidad.trim()
+            const numid = Number(id_tipo_doc_identidad)
+            if(!textoVacio || !Number.isInteger(numid) || numid <= 0){
+                return res.status(400).json({error: "documento de identidad invalido"})
+            }
+        }
+
+        if(typeof numero_documento !== 'string' || !numero_documento.trim()){
+            return res.status(400).json({error: "numero de documento invalido"})
+        }
+
+        if(typeof nombre_razon_social !== 'string' || !nombre_razon_social.trim()){
+            return res.status(400).json({error: "nombre de item invalido"})
+        }
+
+        if(typeof nombre_item !== 'string' || !nombre_item.trim()){
+            return res.status(400).json({error: "nombre de item invalido"})
+        }
+
+        if(typeof nombre_item !== 'string' || !nombre_item.trim()){
+            return res.status(400).json({error: "nombre de item invalido"})
+        }
 
         const {rows} = await pool.query(sql, [id_tipo_doc_identidad, numero_documento, nombre_razon_social, id_tipo_contribuyente, direccion, telefono])
 

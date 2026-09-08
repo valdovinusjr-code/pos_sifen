@@ -9,7 +9,8 @@ import itemsRoute from '../routes/items.routes.js'
 import ventasEncabDet from '../routes/venta_encab.routes.js';
 import movimientoCarga from '../../src/routes/movimiento_stock.routes.js'
 import emisorRoute from '../../src/routes/emisor.route.js'
-
+import timbradoRoute from '../../src/routes/timbrados.route.js'
+import eventoRoute from '../../src/routes/evento_documento.route.js'
 
 const app = express()
 const PUERTO = 3000
@@ -25,6 +26,8 @@ app.use('/clientes', clienteRoute)
 app.use('/ventas', ventasEncabDet)
 app.use('/movimiento_stock', movimientoCarga)
 app.use('/emisor', emisorRoute)
+app.use('/timbrado', timbradoRoute)
+app.use('/evento', eventoRoute)
 
 app.listen(PUERTO, ()=>{
     console.log(`Servidor levantado en http://localhost:${PUERTO}`)

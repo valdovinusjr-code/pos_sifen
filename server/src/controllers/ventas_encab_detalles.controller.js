@@ -6,11 +6,18 @@ export const ventasEncabDet = async(req, res)=>{
         return res.status(400).json({error: "los campos de detalles no pueden quedar vacios"})
     }
 
-    const cliente = await pool.connect()
+    if(!Number.isInteger(Number(id_cliente)) || Number(id_cliente) <= 0){
+        return res.status(400).json({error: 'cliente invalido'})
+    }
 
-    cliente.on('notice', (msg) => {
-        console.log('NOTICE BD:', msg.message);
-    });
+    if(!Number.isInteger(Number(id_condicion_pago)) || Number(id_condicion_pago) <= 0){
+        return res.status(400).json({error: 'condicion de pago invalida'})
+    }
+
+    if(!Number.isInteger(Number(id_forma_pago)) || Number(id_forma_pago) <= 0){
+        return res.status(400).json({error: 'forma de pago invalida'})
+    }
+    const cliente = await pool.connect()
     
     try{
         await cliente.query('BEGIN')

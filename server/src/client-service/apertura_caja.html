@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apertura de Caja</title>
+    <link rel="stylesheet" href="../../../src/style.css">
+    
+</head>
+<body>
+    <main>
+        <div class="card">
+            <h2>APERTURA DE CAJA</h2> 
+            <div id="alert-box" class="alert hidden"></div>      
+            
+            <form id="apertura-form">
+                <div class="form-group">
+                    <label for="id_caja">ID CAJA</label>
+                    <select id="id_caja" required></select>
+                </div>
+
+                <fieldset>
+                    <legend>DETALLE DE DENOMINACIONES</legend>
+                        <div class="panel-carga">
+                            <select id="select-denominacion" title="Seleccione la denominación del billete o moneda" required>
+                                <option value="" disabled selected>Cargando denominación...</option>
+                            </select>
+                            
+                            <input type="number" id="input-cantidad" placeholder="Cantidad" min="1" required>
+                            <button type="button" id="btn-add-row" class="btn-secondary">+ Agregar Fila</button>
+
+                        </div>
+                </fieldset>
+                    <table class="tabla-detalle">
+                        <thead>
+                            <tr>
+                                <th>Denominacion</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body">
+
+                        </tbody>
+                    </table>
+                    
+                    <div class="total-container">
+                    <span>TOTAL DECLARADO: </span>
+                    <output id="total-general" class="total-monto">Gs. 0</output>
+                    </div>
+                
+                <button type="submit" class="btn-primary">Abrir Caja</button>
+            </form>
+        </div>
+    </main>
+    <script src="api.js"></script>
+    <script src="apertura_caja.js"></script>
+</body>
+</html>

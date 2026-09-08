@@ -11,6 +11,18 @@ export const asignar = async(req, res)=>{
             return res.status(400).json({error: 'Todos los campos son obligatorios'})
         }
 
+        if(!Number.isInteger(Number(id_item)) || Number(id_item) <= 0){
+            return res.status(400).json({error: "item invalida"})
+        }
+
+        if(!Number.isInteger(Number(id_sucursal)) || Number(id_sucursal) <= 0){
+            return res.status(400).json({error: "sucursal invalida"})
+        }
+
+        if(!Number.isInteger(Number(cantidad)) || Number(cantidad) <= 0){
+            return res.status(400).json({error: "cantidad invalida, debe ser mayor a 0"})
+        }
+
         const {rows: entrada_item} = await pool.query(`
             SELECT id_tipo_movimiento FROM catalogos.tipo_movimiento WHERE descripcion ILIKE 'compra'
             `)
