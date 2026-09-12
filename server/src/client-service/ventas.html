@@ -10,22 +10,30 @@
 <body>
     <main>
         <div class="card">
-            <h2>APERTURA DE CAJA</h2> 
+            <h2>VENTAS</h2> 
             <div id="alert-box" class="alert hidden"></div>      
             
             <form id="apertura-form">
                 <div class="form-group">
-                    <label for="id_caja">ID CAJA</label>
-                    <select id="id_caja" required></select>
-                </div>
+                    <label for="id_cliente">ID CLIENTE</label>
+                    <select id="id_cliente" required></select>
 
+                    <label for="id_condicion">CONDICION DE PAGO</label>
+                    <select id="id_condicion" required></select>
+
+                    <label for="id_forma">FORMA DE PAGO</label>
+                    <select id="id_forma" required></select>
+
+                    <label for="id_iva">% IVA</label>
+                    <select id="id_iva" required></select>
+                </div>
                 <fieldset>
                     <legend>DETALLE DE DENOMINACIONES</legend>
                         <div class="panel-carga">
-                            <select id="select-denominacion" title="Seleccione la denominación del billete o moneda">
-                                <option value="" disabled selected>Cargando denominación...</option>
-                            </select>
                             
+                                <label for="id_cliente">ITEM</label>
+                                <select id="id_cliente" required></select>
+
                             <input type="number" id="input-cantidad" placeholder="Cantidad" min="1">
                             <button type="button" id="btn-add-row" class="btn-secondary">+ Agregar Fila</button>
 
@@ -34,9 +42,11 @@
                     <table class="tabla-detalle">
                         <thead>
                             <tr>
-                                <th>Denominacion</th>
+                                <th>Item</th>
+                                <th>Precio Unitario</th>
+                                <th>Precio Mayorista</th>
                                 <th>Cantidad</th>
-                                <th>Total</th>
+                                <th>Subtotal</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -50,7 +60,7 @@
                     <output id="total-general" class="total-monto">Gs. 0</output>
                     </div>
                 
-                <button type="submit" class="btn-primary">Abrir Caja</button>
+                <button type="submit" class="btn-primary">CONFIRMAR</button>
             </form>
         </div>
     </main>

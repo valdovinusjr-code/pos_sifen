@@ -46,6 +46,7 @@ export const listarDenominaciones = async(req, res)=>{
 }
 
 export const abrirCaja = async(req, res) => {
+    console.log('LLEGO LA PETICION', req.body)
     const {id_caja, detalles} = req.body
     
     if(!id_caja || !Array.isArray(detalles) || detalles.length === 0){

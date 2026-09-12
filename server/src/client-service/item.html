@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ITEM</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="card">
+                <h1>GESTION DE ITEMS</h1>
+                <div id="alert-box" class="alert hidden"></div>
+
+                <form id="form-item">
+                    <div id="form-group">
+                        <label for="categoria">CATEGORIA ITEM</label>
+                        <select id="categoria"></select>
+                    
+
+                        <label for="marca">MARCA ITEM</label>
+                        <select id="marca"></select>
+                    
+            
+                        <label for="seccion">SECCION ITEM</label>
+                        <select id="seccion"></select>
+
+                        
+                        <label for="grupo">GRUPO ITEM</label>
+                        <select id="grupo"></select>
+
+
+                        <label for="iva">PORCENTAJE IVA ITEM</label>
+                        <select id="iva"></select>
+                    </div>
+
+                    <fieldset>
+                        <legend>DATOS DE ITEM</legend>
+                            <div class="panel-carga">
+                                <label for="nombre-item">NOMBRE ITEM</label>
+                                <input type="text" id="nombre-item" placeholder="Ponga el nombre del producto" required>
+
+                                <label for="pventa-unit">PRECIO UNITARIO</label>
+                                <input type="text" id="pventa-unit" placeholder="Ponga el precio del producto" required>
+                                
+                                <label for="pventa-may">PRECIO MAYORISTA</label>
+                                <input type="text" id="pventa-may" placeholder="Ponga el precio mayorista del producto" required>
+                                
+                                <label for="pventa-unit-liqui">PRECIO UNIT/LIQUIDEZ</label>
+                                <input type="text" id="pventa-unit-liqui" placeholder="Ponga el precio(liquidez) del producto" required>
+                                
+                            </div>
+                    </fieldset>
+
+                    <table class="tabla-detalle">
+                        <thead>
+                            <tr>
+                                <th>ID ITEM</th>
+                                <th>CATEGORIA</th>
+                                <th>MARCA</th>             
+                                <th>GRUPO</th>
+                                <th>SECCION</th>
+                                <th>% IVA</th>
+                                <th>NOMBRE</th>
+                                <th>PRECIO UNITARIO</th>
+                                <th>PRECIO MAYORISTA</th>
+                                <th>PRECIO LIQUIDEZ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body">
+
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn-primary">Cargar Item</button>
+                </form>
+            </div>
+        </main>
+        <script src="api.js"></script>
+        <script src="item.js"></script>
+        
+    </body>
+</html>

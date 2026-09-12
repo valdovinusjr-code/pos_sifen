@@ -6,7 +6,7 @@ const router = Router()
 
 router.use(verificarToken)
 
-router.get('/:id/items_registros', itemsRoutes.listar)
+router.get('/items_registros', itemsRoutes.listar)
 router.post('/items_ingreso', itemsRoutes.asignar)
 
 export default router

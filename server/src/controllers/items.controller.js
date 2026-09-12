@@ -2,42 +2,45 @@ import pool from "../config/db.js";
 
 export const listar = async(req, res)=>{
     try{
-        const id = Number(req.params.id)
-        if(!Number.isInteger(id) || id <= 0){
-            return res.status(400).json({error: 'identificador invalido'})
-        }
         const sql = 
         `
         SELECT 
-        categoria_descrip, marcas_descrip,
-        grupo_descrip, seccion_descrip,
+        items.id_items AS id_items,
+        categorias_items.id_categoria_items AS id_categoria,
+        categoria_descrip, 
+        marcas_items.id_marcas_items AS id_marca,
+        marcas_descrip,
+        grupos_items.id_grupo_items AS id_grupo,
+        grupo_descrip, 
+        seccion_ubicacionitems.id_seccion_items AS id_seccion,
+        seccion_descrip,
         nombre_item, pventa_unit,
         pventa_may, pventa_unit_liqui,
-        porcentaje, servicios, activo
+        porc_iva.id_porc_iva AS porc_iva,
+        porcentaje, 
+        servicios, 
+        activo
         FROM inventario.items JOIN inventario.categorias_items
         ON items.id_categoria_items = categorias_items.id_categoria_items
         JOIN inventario.marcas_items ON inventario.items.id_marcas_items = marcas_items.id_marcas_items
         JOIN inventario.grupos_items ON inventario.items.id_grupo_items = grupos_items.id_grupo_items
         JOIN inventario.seccion_ubicacionitems ON inventario.items.id_seccion_items = seccion_ubicacionitems.id_seccion_items
         JOIN catalogos.porc_iva ON inventario.items.id_porc_iva = porc_iva.id_porc_iva
-        WHERE id_items = $1
         `
 
-        const {rows} = await pool.query(sql, [id])
+        const {rows} = await pool.query(sql)
 
         if(rows.length === 0){
             return res.status(404).json({error: 'el item no existe'})
         }
 
-        res.status(200).json({
-            message: 'Item encontrado',
-            item: rows[0]
-        })
+        res.status(200).json(rows)
     }catch(error){
         console.error(error)
         res.status(500).json({error: 'Problemas en el servidor'})
     }
 }
+
 
 export const asignar = async(req, res)=>{
     try{

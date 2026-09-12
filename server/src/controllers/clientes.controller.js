@@ -1,31 +1,71 @@
 import pool from "../config/db.js";
 
-export const listar = async(req, res)=>{
+export const listarContribuyente = async(req, res)=>{
     try{
-        const id = Number(req.params.id)
-        if(!Number.isInteger(id) || id <= 0){
-            return res.status(400).json({error: 'identificador invalido'})
-        }
         const sql = 
         `
         SELECT 
+        id_tipo_contribuyente,
+        codigo, descripcion
+        FROM catalogos.tipo_contribuyente
+        `
+
+        const {rows} = await pool.query(sql)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'el contribuyente no existe'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listarDocumentos = async(req, res)=>{
+    try{
+        const sql = 
+        `
+        SELECT 
+        id_tipo_doc_identidad,
+        codigo_sifen, descripcion
+        FROM catalogos.tipo_documento_identidad
+        `
+
+        const {rows} = await pool.query(sql)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'el documento no existe'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listar = async(req, res)=>{
+    try{
+        const sql = 
+        `
+        SELECT 
+        id_cliente,
         id_tipo_doc_identidad, numero_documento,
         nombre_razon_social, id_tipo_contribuyente,
         direccion, telefono
         FROM venta.cliente 
-        WHERE id_cliente = $1
+        ORDER BY id_cliente
         `
 
-        const {rows} = await pool.query(sql, [id])
+        const {rows} = await pool.query(sql)
 
         if(rows.length === 0){
             return res.status(404).json({error: 'el cliente no existe'})
         }
 
-        res.status(200).json({
-            message: 'Cliente encontrado',
-            cliente: rows[0]
-        })
+        res.status(200).json(rows)
     }catch(error){
         console.error(error)
         res.status(500).json({error: 'Problemas en el servidor'})
@@ -51,7 +91,7 @@ export const asignar = async(req, res)=>{
         if(id_tipo_doc_identidad !== undefined){
             const textoVacio = typeof id_tipo_doc_identidad === 'string' && !id_tipo_doc_identidad.trim()
             const numid = Number(id_tipo_doc_identidad)
-            if(!textoVacio || !Number.isInteger(numid) || numid <= 0){
+            if(textoVacio || !Number.isInteger(numid) || numid <= 0){
                 return res.status(400).json({error: "documento de identidad invalido"})
             }
         }
@@ -61,14 +101,6 @@ export const asignar = async(req, res)=>{
         }
 
         if(typeof nombre_razon_social !== 'string' || !nombre_razon_social.trim()){
-            return res.status(400).json({error: "nombre de item invalido"})
-        }
-
-        if(typeof nombre_item !== 'string' || !nombre_item.trim()){
-            return res.status(400).json({error: "nombre de item invalido"})
-        }
-
-        if(typeof nombre_item !== 'string' || !nombre_item.trim()){
             return res.status(400).json({error: "nombre de item invalido"})
         }
 

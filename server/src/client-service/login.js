@@ -22,13 +22,18 @@ user_form.addEventListener('submit', async(e)=> {
         })
         const datos = await respuesta.json()
         if(!respuesta.ok){
-            console.log('error al iniciar sesion')
+            alert(datos.error || 'No se pudo iniciar sesion')
+            return
+        }
+
+        if(typeof datos.token !== 'string' || datos.token.split('.').length !== 3){
+            alert('El servidor devolvio un token invalido')
             return
         }
 
         localStorage.setItem('token', datos.token)
         localStorage.setItem('rol', datos.rol)
-        window.location.href = 'apertura_caja.html'
+        window.location.href = 'clientes.html'
     }catch(error){
         console.error(error)
     }

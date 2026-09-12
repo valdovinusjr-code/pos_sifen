@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Clientes</title>
+    </head>
+        <body>
+            <main>
+                <div class="card">
+                    <h1>CLIENTES</h1>
+                    <div id="alert-box" class="alert hidden"></div>
+
+                    <form id="form-cliente">
+                        <div class="form-group">
+                            <label for="id-documento">TIPO DE DOCUMENTO</label>
+                            <select id="id-documento"></select>
+
+                            <label for="id-contribuyente">TIPO DE CONTRIBUYENTE</label>
+                            <select id="id-contribuyente">
+                                <option value="">Cargando tipos de contribuyente...</option>
+                            </select>
+                        </div>
+
+                        <fieldset>
+                            <legend>DATOS PERSONALES</legend>
+                                <div class="panel-carga">
+                                    <label for="numero-documento">Numero de documento</label>
+                                    <input type="text" id="numero-documento" placeholder="Introduzca su numero de documento">   
+                                    
+                                    <label for="razon-social">Nombre y Apellido</label>
+                                    <input type="text" id="razon-social" placeholder="Introduzca su numero de documento">  
+
+                                    <label for="direccion">Direccion</label>
+                                    <input type="text" id="direccion" placeholder="Introduzca su numero de documento">  
+
+                                    <label for="telefono">Telefono</label>
+                                    <input type="text" id="telefono" placeholder="Introduzca su numero de documento">  
+                                </div>
+                        </fieldset>
+                    
+                    <table class="tabla-detalle">
+                        <thead>
+                            <tr>
+                                <th>ID CLIENTE</th>
+                                <th>TIPO DE DOCUMENTO</th>
+                                <th>NUMERO DOCUMENTO</th>
+                                <th>TIPO DE CONTRIBUYENTE</th>
+                                <th>NOMBRE COMPLETO</th>
+                                <th>DIRECCION</th>
+                                <th>TELEFONO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body">
+                            
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn-primary">CARGAR CLIENTE</button>
+                    </form>
+                </div>   
+            </main>
+            <script src="api.js"></script>
+            <script src="cliente.js"></script>
+            
+        </body>
+</html>
