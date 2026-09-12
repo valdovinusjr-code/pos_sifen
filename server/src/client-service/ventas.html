@@ -13,7 +13,7 @@
             <h2>VENTAS</h2> 
             <div id="alert-box" class="alert hidden"></div>      
             
-            <form id="apertura-form">
+            <form id="venta-form">
                 <div class="form-group">
                     <label for="id_cliente">ID CLIENTE</label>
                     <select id="id_cliente" required></select>
@@ -24,15 +24,13 @@
                     <label for="id_forma">FORMA DE PAGO</label>
                     <select id="id_forma" required></select>
 
-                    <label for="id_iva">% IVA</label>
-                    <select id="id_iva" required></select>
                 </div>
                 <fieldset>
-                    <legend>DETALLE DE DENOMINACIONES</legend>
+                    <legend>DETALLE DE VENTA</legend>
                         <div class="panel-carga">
                             
-                                <label for="id_cliente">ITEM</label>
-                                <select id="id_cliente" required></select>
+                                <label for="id_item">ITEM</label>
+                                <select id="id_item"></select>
 
                             <input type="number" id="input-cantidad" placeholder="Cantidad" min="1">
                             <button type="button" id="btn-add-row" class="btn-secondary">+ Agregar Fila</button>
@@ -44,7 +42,6 @@
                             <tr>
                                 <th>Item</th>
                                 <th>Precio Unitario</th>
-                                <th>Precio Mayorista</th>
                                 <th>Cantidad</th>
                                 <th>Subtotal</th>
                                 <th>Acciones</th>
@@ -65,6 +62,6 @@
         </div>
     </main>
     <script src="api.js"></script>
-    <script src="apertura_caja.js"></script>
+    <script src="venta.js"></script>
 </body>
 </html>

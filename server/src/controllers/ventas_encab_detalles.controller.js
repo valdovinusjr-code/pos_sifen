@@ -1,5 +1,129 @@
 import pool from "../config/db.js";
 
+export const listarVentas = async(req, res)=>{
+    try{
+        const sql = 
+        `
+        SELECT
+        dv.id_det_ventas,
+        dv.id_item,
+        dv.cantidad,
+        dv.precio_unit,
+        dv.id_porc_iva,
+        dv.subtotal,
+        c.id_cliente AS id_cliente,
+        c.nombre_razon_social,
+        c.numero_documento,
+        f.id_forma_pago,
+        f.nombre_forma,
+        cd.id_condicion_pago,
+        cd.nombre_condicion
+        FROM venta.detalle_ventas dv
+        JOIN venta.encab_ventas ev ON dv.id_encab_ventas = ev.id_encab_ventas
+        JOIN venta.cliente c ON ev.id_cliente = c.id_cliente
+        JOIN catalogos.forma_pago f ON ev.id_forma_pago = f.id_forma_pago
+        JOIN catalogos.condicion_pago cd ON ev.id_condicion_pago = cd.id_condicion_pago
+        `
+
+        const {rows} = await pool.query(sql)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'el contribuyente no existe'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listarCondicionesPago = async(req, res)=>{
+    try{
+        const {rows} = await pool.query(`
+            SELECT id_condicion_pago, nombre_condicion
+            FROM catalogos.condicion_pago
+            ORDER BY id_condicion_pago
+        `)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'No existen condiciones de pago'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listarItems = async(req, res)=>{
+    try{
+        const {rows} = await pool.query(`
+            SELECT id_items,
+            id_categoria_items, 
+            id_marcas_items, 
+            id_seccion_items, 
+            id_grupo_items, 
+            nombre_item, 
+            pventa_unit, 
+            pventa_may, 
+            pventa_unit_liqui, 
+            id_porc_iva, 
+            servicios, 
+            activo
+	        FROM inventario.items;
+        `)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'No existen items'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listarFormasPago = async(req, res)=>{
+    try{
+        const {rows} = await pool.query(`
+            SELECT id_forma_pago, nombre_forma
+            FROM catalogos.forma_pago
+            ORDER BY id_forma_pago
+        `)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'No existen formas de pago'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
+export const listarIVA = async(req, res)=>{
+    try{
+        const {rows} = await pool.query(`
+            SELECT id_porc_iva, porcentaje
+            FROM catalogos.porc_iva
+            ORDER BY id_porc_iva
+        `)
+
+        if(rows.length === 0){
+            return res.status(404).json({error: 'Sin acceso al IVA'})
+        }
+
+        res.status(200).json(rows)
+    }catch(error){
+        console.error(error)
+        res.status(500).json({error: 'Problemas en el servidor'})
+    }
+}
+
 export const ventasEncabDet = async(req, res)=>{
     const {id_cliente, id_condicion_pago, id_forma_pago, detalle} = req.body
     if(!id_cliente || !id_condicion_pago || !id_forma_pago || !Array.isArray(detalle) || detalle.length === 0){
