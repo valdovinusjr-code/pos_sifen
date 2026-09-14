@@ -8,6 +8,13 @@ const cantidad = document.getElementById('input-cantidad')
 const output = document.getElementById('total-general')
 const tablaBody = document.getElementById('tabla-body')
 const form = document.getElementById('venta-form')
+const facturaModal = document.getElementById('factura-modal')
+const facturaVenta = document.getElementById('factura-venta-info')
+const facturaForm = document.getElementById('factura-form')
+const documento = document.getElementById('id_tipo_documento')
+const btnOmitir = document.getElementById('omitir-factura')
+
+let idVentaPendiente = null
 let listaItems = []
 let detalleArray = []
 
@@ -166,6 +173,12 @@ form.addEventListener('submit', async(e)=>{
             throw new Error(resultado.error || 'Error al ejecutar una venta')
         } 
 
+        idVentaPendiente = resultado.id_venta
+
+        facturaVenta.textContent =
+        `Venta ${idVentaPendiente} registrada. Generar factura`
+        facturaModal.classList.remove('hidden')
+
         mostrarAlerta('Venta Realizada', 'exito')
 
         form.reset()
@@ -178,6 +191,62 @@ form.addEventListener('submit', async(e)=>{
  
 })
 
+async function tiposDocumento() {
+    try {
+        const respuesta = await fetchProtegido('facturas/tipos')
+        const datos = await respuesta.json()
+
+        if (!respuesta.ok) {
+            throw new Error(
+                datos.error || 'No se pudieron cargar los documentos'
+            )
+        }
+
+        documento.innerHTML =
+            '<option value="" disabled selected>' +
+            'Seleccione un documento' +
+            '</option>' +
+            datos.map(tipo =>
+                `<option value="${tipo.id_tipo_documento}">
+                    ${tipo.nombre}
+                </option>`
+            ).join('')
+    } catch (error) {
+        console.error(error)
+        mostrarAlerta(error.message, 'error')
+    }
+}
+
+facturaForm.addEventListener('submit', async(e)=>{
+    e.preventDefault()
+
+    try{
+        const respuesta = await fetchProtegido('facturas/generar', 'POST',
+            {id_venta: idVentaPendiente, id_tipo_documento: Number(documento.value)} 
+        )
+
+        const resultado = await respuesta.json()
+        
+        if(!respuesta.ok){
+            throw new Error(resultado.error || 'No se pudo generar la factura')
+        }
+
+        cerrarModalFactura()
+         mostrarAlerta(`Facturada generada con exito`, 'exito')
+    }catch(error){
+        console.error(error)
+        mostrarAlerta(error.message, 'error')
+    }
+})
+
+btnOmitir.addEventListener('click', cerrarModalFactura)
+
+function cerrarModalFactura(){
+    facturaModal.classList.add('hidden')
+    facturaForm.reset()
+    idVentaPendiente = null
+}
+
 function mostrarAlerta(mensaje, tipo = 'info') {
     alertBox.textContent = mensaje
     alertBox.className = `alert ${tipo}`    
@@ -189,5 +258,6 @@ async function inicializar() {
     await condicionesPago()
     await formasPago()
     await items()
+    await tiposDocumento()
 }
  document.addEventListener('DOMContentLoaded', inicializar)

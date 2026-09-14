@@ -7,5 +7,5 @@ const router = Router()
 router.use(verificarToken)
 
 router.post('/generar', facturasController.asignar)
-
+router.get('/tipos', facturasController.listarTiposDocumento)
 export default router

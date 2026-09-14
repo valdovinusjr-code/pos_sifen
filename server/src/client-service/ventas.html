@@ -60,6 +60,21 @@
                 <button type="submit" class="btn-primary">CONFIRMAR</button>
             </form>
         </div>
+
+        <div id="factura-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Generar Factura</h2>
+                <p id="factura-venta-info"></p>
+                <form id="factura-form">
+                    <label for="id_tipo_documento">ID TIPO DE DOCUMENTO</label>
+                    <select id="id_tipo_documento" required></select>
+
+                    <button type="submit" class="btn-primary">GENERAR</button>
+
+                    <button type="button" id="omitir-factura" class="btn-secondary">OMITIR</button>
+                </form>
+            </div>
+        </div>
     </main>
     <script src="api.js"></script>
     <script src="venta.js"></script>

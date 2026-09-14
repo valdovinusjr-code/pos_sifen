@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EVENTO DE DOCUMENTO</title>
+    </head>
+        <body>
+            <main>
+                <form id="form-evento">
+                    <div id="form-group">
+                        <label for="ventas">DOCUMENTO ELECTRONICO</label>
+                        <select id="ventas"></select>
+                    
+
+                        <label for="documento">TIPO EVENTO</label>
+                        <select id="documento"></select>
+                    
+                    </div>
+                </form>
+                    <table class="tabla-detalle">
+                        <thead>
+                            <tr>
+                                <th>VENTA</th>
+                                <th>TIPO DE DOCUMENTO</th>
+                                <th></th>             
+                                <th>MOTIVO</th>
+                                <th>FECHA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body">
+
+                        </tbody>
+                    </table>
+            </main>         
+        </body>
+        <script src="api.js"></script>
+        <script src="evento_documento.js"></script>
+</html>   

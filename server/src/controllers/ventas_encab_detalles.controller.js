@@ -189,6 +189,7 @@ export const ventasEncabDet = async(req, res)=>{
 
         await cliente.query('COMMIT')
         res.status(201).json({
+            id_venta: id_encab,
             total: total,
             cliente: nombre_cliente
         })

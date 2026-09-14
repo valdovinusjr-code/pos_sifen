@@ -21,6 +21,44 @@ export const calcularDV = (valor) => {
     return dv
 }
 
+export const listarTiposDocumento = async (req, res) => {
+    try {
+        const { rows } = await pool.query(`
+            SELECT id_tipo_documento, nombre
+            FROM catalogos.tipo_documento
+            ORDER BY id_tipo_documento
+        `)
+
+        res.status(200).json(rows)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            error: 'No se pudieron cargar los tipos de documento'
+        })
+    }
+}
+
+export const listarFacturas = async (req, res) => {
+    try {
+        const { rows } = await pool.query(`
+            SELECT id_documento_electronico, id_venta, v.fecha_hora, d.id_tipo_documento, d.nombre, t.id_timbrado, t.numero, cdc, numero_documento, ed.id_estado_documento, ed.idescripcion,fecha_emision, xml_payload
+            FROM facturacion.documento_electronico de JOIN venta.encab_ventas v ON 
+            de.id_venta = v.id_encab_ventas JOIN catalogos.tipo_documento d ON
+            d.id_tipo_documento = de.id_tipo_documento JOIN facturacion.timbrado t ON
+            de.id_timbrado = t.id_timbrado JOIN catalogos.estado_documento ed ON
+            de.id_estado_documento = ed.id_estado_documento
+	        ;
+        `)
+
+        res.status(200).json(rows)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            error: 'No se pudieron cargar las facturas'
+        })
+    }
+}
+
 export const asignar = async(req, res) => {
     const {id_venta, id_tipo_documento} =req.body
 
@@ -126,3 +164,4 @@ export const asignar = async(req, res) => {
         cliente.release()
     }
 }
+

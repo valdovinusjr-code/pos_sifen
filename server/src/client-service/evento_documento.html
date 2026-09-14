@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EVENTO DE DOCUMENTO</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="card">
+                <h1>GESTION DE EVENTOS DE DOCUMENTO</h1>
+                <div id="alert-box" class="alert hidden"></div>
+
+                <form id="form-evento">
+                    <div id="form-group">
+                        <label for="documento">DOCUMENTO ELECTRONICO</label>
+                        <select id="documento"></select>
+                    
+
+                        <label for="tipo_evento">TIPO EVENTO</label>
+                        <select id="tipo_evento"></select>
+                    
+        
+                    </div>
+
+                    <fieldset>
+                        <legend>DATOS DEL EVENTO</legend>
+                            <div class="panel-carga">
+                                <label for="motivo">MOTIVO</label>
+                                <input type="text" id="motivo" placeholder="Ponga el motivo del evento" required>
+                            </div>
+                    </fieldset>
+
+                    <table class="tabla-detalle">
+                        <thead>
+                            <tr>
+                                <th>ID EVENTO</th>
+                                <th>DOCUMENTO ELECTRONICO</th>
+                                <th>TIPO DE EVENTO</th>             
+                                <th>MOTIVO</th>
+                                <th>FECHA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body">
+
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn-primary">Generar Evento</button>
+                </form>
+            </div>
+        </main>
+        <script src="api.js"></script>
+        <script src="evento_documento.js"></script>
+        
+    </body>
+</html>
